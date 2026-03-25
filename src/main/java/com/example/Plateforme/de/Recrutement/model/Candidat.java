@@ -21,12 +21,11 @@ public class Candidat {
     private String ville;
     private String nationalite;
     private String linkedin;
+    private String photoUrl; // ✅ JADID
 
-    /**
-     * El rbat m3a el Utilisateur.
-     * El Candidat houwa elli i-hez el 'user_id' k'clé étrangère.
-     */
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Utilisateur user;
+    @Column(columnDefinition = "TEXT")
+    private String competences;
 }

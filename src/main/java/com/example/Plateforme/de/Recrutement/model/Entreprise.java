@@ -22,11 +22,15 @@ public class Entreprise {
     private String adresse;
     private String siteWeb;
     private String responsableRH;
+    private String logoUrl;
 
-    /**
-     * El rbat m3a el Utilisateur.
-     * @JoinColumn ya3mel jdid esmou 'user_id' fil table 'entreprise'.
-     */
+    // ✅ NOUVEAUX CHAMPS
+    private String taille;           // "1-10", "11-50", "51-200", "201-500", "500+"
+    private String pays;             // "Tunisie", "France"...
+    @Column(columnDefinition = "TEXT")
+    private String description;      // description libre
+    private String emailEntreprise;  // email pro de l'entreprise
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Utilisateur user;
