@@ -9,7 +9,7 @@ import ResetPassword     from "./components/ResetPassword";
 import GestionOffres     from "./components/Gestionoffres";
 import AdminDashboard    from "./components/AdminDashboard";
 import VerifyEmail       from "./components/VerifyEmail";
-import DashboardCandidat from "./components/DashboardCandidat.jsx";
+import DashboardCandidat from "./components/DashboardCandidat";
 
 function App() {
   return (
