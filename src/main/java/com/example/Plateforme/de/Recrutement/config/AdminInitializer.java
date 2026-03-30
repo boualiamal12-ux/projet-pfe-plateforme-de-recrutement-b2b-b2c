@@ -4,6 +4,7 @@ import com.example.Plateforme.de.Recrutement.enums.Role;
 import com.example.Plateforme.de.Recrutement.model.Utilisateur;
 import com.example.Plateforme.de.Recrutement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,18 +17,31 @@ public class AdminInitializer {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Value("${app.admin.email}")
+    private String adminEmail;
+
+    @Value("${app.admin.password}")
+    private String adminPassword;
+
     @Bean
     CommandLineRunner initAdmin() {
         return args -> {
-            if (userRepository.findByEmail("admin@pfe.com").isEmpty()) {
+            if (userRepository.findByEmail(adminEmail).isEmpty()) {
                 Utilisateur admin = new Utilisateur();
-                admin.setEmail("admin@pfe.com");
-                admin.setPassword(passwordEncoder.encode("admin123"));
+                admin.setEmail(adminEmail);
+                admin.setPassword(passwordEncoder.encode(adminPassword));
                 admin.setRole(Role.ADMIN);
+                admin.setValidated(true); // ✅
+
                 userRepository.save(admin);
-                System.out.println("✅ Compte Admin créé par défaut.");
-                System.out.println("📧 Email: admin@pfe.com");
-                System.out.println("🔑 Password: admin123");
+
+                System.out.println("--------------------------------------");
+                System.out.println("✅ Compte Admin créé via configuration :");
+                System.out.println("📧 Email : " + adminEmail);
+                System.out.println("🔑 Password : [PROTECTED]");
+                System.out.println("--------------------------------------");
+            } else {
+                System.out.println("ℹ️ Compte Admin existe déjà.");
             }
         };
     }
